@@ -8,6 +8,7 @@ This passwords and usernames should be hidden until clicked and linked to a webs
 
 import tkinter as tk
 from tkinter import messagebox
+import database_connection
 
 
 class AppController:
@@ -71,15 +72,33 @@ class PasswordManagerApp:
         self.label = tk.Label(self.main_frame, text="Websites", font=("Arial", 14))
         self.label.grid(row=1, column=0, columnspan=2, pady=10)  # Span across both columns
 
+        self.website_entry = tk.Entry(self.main_frame, width=25)
+        self.website_entry.grid(row=2, column=0, columnspan=2, pady=10)
+
         # Add Username label
         self.label = tk.Label(self.main_frame, text="Username", font=("Arial", 14))
         self.label.grid(row=1, column=2, columnspan=2, pady=10)  # Span across both columns
+
+        self.user_entry = tk.Entry(self.main_frame, width=25)
+        self.user_entry.grid(row=2, column=2, columnspan=2, pady=10)
 
         # Add Password label
         self.label = tk.Label(self.main_frame, text="Password", font=("Arial", 14))
         self.label.grid(row=1, column=4, columnspan=2, pady=10)  # Span across both columns
 
+        self.password_entry = tk.Entry(self.main_frame, width=25, show="*")
+        self.password_entry.grid(row=2, column=4, columnspan=2, pady=10)
+
+
+        def save_password(self):
+            website = self.website_entry.get()
+            username = self.user_entry.get()
+            password = self.password_entry.get()
+            database_connection.add_account(website, username, password)
+            messagebox.showinfo("Info", "Password saved successfully!")
+
 def main():
+    database_connection.setup_database()
     root = tk.Tk()
     app = AppController(root)
     root.mainloop()
