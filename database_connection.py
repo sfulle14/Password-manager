@@ -43,3 +43,13 @@ def get_record_count():
     conn.commit()
     conn.close()
     return count
+
+# Get records from accounts table
+def get_records():
+    conn = create_connection()
+    c = conn.cursor()
+    c.execute("SELECT * FROM accounts")
+    records = c.fetchall()
+    conn.commit()
+    conn.close()
+    return records

@@ -57,7 +57,7 @@ class PasswordManagerApp:
         self.main_frame.grid()
         
         # Add Program label
-        self.label = tk.Label(self.main_frame, text="Login worked!", font=("Arial", 14))
+        self.label = tk.Label(self.main_frame, text="Your Passwords", font=("Arial", 14))
         self.label.grid(row=0, column=0, columnspan=2, pady=10)  # Span across both columns
 
         # Add password Button
@@ -68,18 +68,26 @@ class PasswordManagerApp:
         self.logout_button = tk.Button(self.main_frame, text="Logout", command=lambda: controller.show_frame(LoginApp))
         self.logout_button.grid(row=0, column=3, sticky=tk.E)  # Placed at the top right
 
-        for i in range(database_connection.get_record_count()):
-            # Add website label
-            self.label = tk.Label(self.main_frame, text="Websites", font=("Arial", 14))
-            self.label.grid(row=1, column=0, columnspan=2, pady=10)  # Span across both columns
+        # labels for the data
+        self.label = tk.Label(self.main_frame, text="row", font=("Arial", 14))
+        self.label.grid(row=1, column=0, columnspan=2, pady=10) 
+        self.label = tk.Label(self.main_frame, text="Websites", font=("Arial", 14))
+        self.label.grid(row=1, column=2, columnspan=2, pady=10) 
+        self.label = tk.Label(self.main_frame, text="Username", font=("Arial", 14))
+        self.label.grid(row=1, column=4, columnspan=2, pady=10)  
+        self.label = tk.Label(self.main_frame, text="Password", font=("Arial", 14))
+        self.label.grid(row=1, column=6, columnspan=2, pady=10)
 
-            # Add Username label
-            self.label = tk.Label(self.main_frame, text="Username", font=("Arial", 14))
-            self.label.grid(row=1, column=2, columnspan=2, pady=10)  # Span across both columns
+        records = database_connection.get_records()
+        for index, row in enumerate(records):
+            # tk.Label(self.main_frame, text= str(index), font=("Arial", 14)).grid(row=index+2, column=0)
+            tk.Label(self.main_frame, text=row[0], font=("Arial", 14)).grid(row=index+2, column=1, columnspan=2, sticky=tk.W)  # row
+            tk.Label(self.main_frame, text=row[1], font=("Arial", 14)).grid(row=index+2, column=2, columnspan=2, sticky=tk.W)  # website
+            tk.Label(self.main_frame, text=row[2], font=("Arial", 14)).grid(row=index+2, column=3, columnspan=2, sticky=tk.W)  # username
+            tk.Label(self.main_frame, text=row[3], font=("Arial", 14)).grid(row=index+2, column=4, columnspan=2, sticky=tk.W)  # password
+            
 
-            # Add Password label
-            self.label = tk.Label(self.main_frame, text="Password", font=("Arial", 14))
-            self.label.grid(row=1, column=4, columnspan=2, pady=10)  # Span across both columns
+            
 
 
 """
