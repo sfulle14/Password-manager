@@ -66,25 +66,35 @@ class PasswordManagerApp:
 
         # Logout Button
         self.logout_button = tk.Button(self.main_frame, text="Logout", command=lambda: controller.show_frame(LoginApp))
-        self.logout_button.grid(row=0, column=3, sticky=tk.E)  # Placed at the top right
+        self.logout_button.grid(row=0, column=4, columnspan=2, sticky=tk.E)  # Placed at the top right
 
         # labels for the data
-        self.label = tk.Label(self.main_frame, text="row", font=("Arial", 14))
-        self.label.grid(row=1, column=0, columnspan=2, pady=10) 
+        # self.label = tk.Label(self.main_frame, text="row", font=("Arial", 14))
+        # self.label.grid(row=1, column=0, columnspan=2, pady=10) 
         self.label = tk.Label(self.main_frame, text="Websites", font=("Arial", 14))
-        self.label.grid(row=1, column=2, columnspan=2, pady=10) 
+        self.label.grid(row=1, column=1, columnspan=3, pady=10, sticky=tk.W) 
         self.label = tk.Label(self.main_frame, text="Username", font=("Arial", 14))
-        self.label.grid(row=1, column=4, columnspan=2, pady=10)  
+        self.label.grid(row=1, column=4, columnspan=3, pady=10)  
         self.label = tk.Label(self.main_frame, text="Password", font=("Arial", 14))
-        self.label.grid(row=1, column=6, columnspan=2, pady=10)
+        self.label.grid(row=1, column=7, columnspan=3, pady=10)
 
         records = database_connection.get_records()
         for index, row in enumerate(records):
             # tk.Label(self.main_frame, text= str(index), font=("Arial", 14)).grid(row=index+2, column=0)
-            tk.Label(self.main_frame, text=row[0], font=("Arial", 14)).grid(row=index+2, column=1, columnspan=2, sticky=tk.W)  # row
-            tk.Label(self.main_frame, text=row[1], font=("Arial", 14)).grid(row=index+2, column=2, columnspan=2, sticky=tk.W)  # website
-            tk.Label(self.main_frame, text=row[2], font=("Arial", 14)).grid(row=index+2, column=3, columnspan=2, sticky=tk.W)  # username
-            tk.Label(self.main_frame, text=row[3], font=("Arial", 14)).grid(row=index+2, column=4, columnspan=2, sticky=tk.W)  # password
+            tk.Label(self.main_frame, text=row[0], font=("Arial", 14)).grid(row=index+2, column=0, columnspan=1, sticky=tk.W)  # row
+            tk.Label(self.main_frame, text=row[1], font=("Arial", 14)).grid(row=index+2, column=1, columnspan=2, sticky=tk.W)  # website
+            tk.Label(self.main_frame, text=row[2], font=("Arial", 14)).grid(row=index+2, column=4, columnspan=2, sticky=tk.W)  # username
+            tk.Label(self.main_frame, text=row[3], font=("Arial", 14)).grid(row=index+2, column=7, columnspan=2, sticky=tk.W)  # password
+            self.delete_button = tk.Button(self.main_frame, text="delete", command=self.delete_record)
+            self.delete_button.grid(row=index+2, column=9, columnspan=2, sticky=tk.W)  # Placed at the top right
+
+        
+    def delete_record(self):
+         print(id)
+         database_connection.delete_row(id)
+         messagebox.showinfo("Info", "Password deleted successfully!")
+         self.controller.show_frame(PasswordManagerApp)
+
             
 
             

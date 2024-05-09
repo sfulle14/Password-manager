@@ -11,10 +11,10 @@ def setup_database():
     c = conn.cursor()
     # Create accounts table
     c.execute('''CREATE TABLE IF NOT EXISTS accounts
-                 (id INTEGER PRIMARY KEY, website TEXT, username TEXT, password TEXT)''')
+                 (id INTEGER PRIMARY KEY, website TEXT UNIQUE, username TEXT, password TEXT)''')
     # Create users table
     c.execute('''CREATE TABLE IF NOT EXISTS users
-                 (id INTEGER PRIMARY KEY, username TEXT, password TEXT)''')
+                 (id INTEGER PRIMARY KEY, username TEXT UNIQUE, password TEXT)''')
     conn.commit()
     conn.close()
 
@@ -53,3 +53,12 @@ def get_records():
     conn.commit()
     conn.close()
     return records
+
+# Remove a record
+def delete_row(id):
+    conn = create_connection()
+    c = conn.cursor()
+    c.execute("DELETE FROM accounts WHERE id = ?", (id))
+    conn.commit()
+    conn.close()
+    
