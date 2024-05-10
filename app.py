@@ -69,8 +69,7 @@ class PasswordManagerApp:
         self.logout_button.grid(row=0, column=4, columnspan=2, sticky=tk.E)  # Placed at the top right
 
         # labels for the data
-        # self.label = tk.Label(self.main_frame, text="row", font=("Arial", 14))
-        # self.label.grid(row=1, column=0, columnspan=2, pady=10) 
+
         self.label = tk.Label(self.main_frame, text="Websites", font=("Arial", 14))
         self.label.grid(row=1, column=1, columnspan=3, pady=10, sticky=tk.W) 
         self.label = tk.Label(self.main_frame, text="Username", font=("Arial", 14))
@@ -78,9 +77,11 @@ class PasswordManagerApp:
         self.label = tk.Label(self.main_frame, text="Password", font=("Arial", 14))
         self.label.grid(row=1, column=7, columnspan=3, pady=10)
 
+        self.show_records()
+
+    def show_records(self):
         records = database_connection.get_records()
         for index, row in enumerate(records):
-            # tk.Label(self.main_frame, text= str(index), font=("Arial", 14)).grid(row=index+2, column=0)
             tk.Label(self.main_frame, text=row[0], font=("Arial", 14)).grid(row=index+2, column=0, columnspan=1, sticky=tk.W)  # row
             tk.Label(self.main_frame, text=row[1], font=("Arial", 14)).grid(row=index+2, column=1, columnspan=2, sticky=tk.W)  # website
             tk.Label(self.main_frame, text=row[2], font=("Arial", 14)).grid(row=index+2, column=4, columnspan=2, sticky=tk.W)  # username
@@ -153,3 +154,4 @@ class AddPasswordApp:
             database_connection.add_account(website, username, password)
             messagebox.showinfo("Info", "Password saved successfully!")
             self.controller.show_frame(PasswordManagerApp)
+            self.controller.frames[PasswordManagerApp].show_records()
