@@ -11,7 +11,7 @@ def setup_database():
     c = conn.cursor()
     # Create accounts table
     c.execute('''CREATE TABLE IF NOT EXISTS accounts
-                 (id INTEGER PRIMARY KEY, website TEXT UNIQUE, username TEXT, password TEXT)''')
+                 (id INTEGER PRIMARY KEY, website TEXT UNIQUE, username TEXT, password TEXT, FOREIGN KEY(userID) REFERENCES users(id))''')
     # Create users table
     c.execute('''CREATE TABLE IF NOT EXISTS users
                  (id INTEGER PRIMARY KEY, username TEXT UNIQUE, password TEXT)''')

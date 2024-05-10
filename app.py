@@ -90,7 +90,7 @@ class PasswordManagerApp:
         records = database_connection.get_records()
         for index, row in enumerate(records):
             # row number and index in database
-            index_label = tk.Label(self.main_frame, text=row[0], font=("Arial", 14))
+            index_label = tk.Label(self.main_frame, text=index+1, font=("Arial", 14))
             index_label.grid(row=index+2, column=0, columnspan=1, sticky=tk.W)  # row
             self.index_labels[index] = (index_label, row[0])
 
