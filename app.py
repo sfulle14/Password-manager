@@ -44,7 +44,7 @@ class LoginApp:
 
         # Button to add user
         self.show_button = tk.Button(self.main_frame, text="Add User", command=lambda: controller.show_frame(AddUserApp))
-        self.show_button.grid(row=3, column=2, columnspan=2, pady=10)
+        self.show_button.grid(row=3, column=2, columnspan=1, pady=10)
 
 
 """
@@ -140,6 +140,7 @@ class AddPasswordApp:
         self.root = root
         self.controller = controller
         self.root.title("Password Manager")
+        
 
         # Create main frame
         self.main_frame = tk.Frame(self.root, padx=10, pady=10)
@@ -237,3 +238,4 @@ class AddUserApp:
             self.controller.show_frame(LoginApp)
         except:
             messagebox.showerror("Error", "User already exsits.")
+
