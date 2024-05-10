@@ -122,11 +122,6 @@ class PasswordManagerApp:
             label.config(text="*"*10)
         
 
-            
-
-            
-
-
 """
 This will control how websites, usernames, and passwords are added.
 """
@@ -174,10 +169,13 @@ class AddPasswordApp:
         self.add_password_button.grid(row=3, column=2, columnspan=2, pady=10)  # Placed at the top right
 
     def save_password(self):
-            website = self.website_entry.get()
-            username = self.user_entry.get()
-            password = self.password_entry.get()
-            database_connection.add_account(website, username, password)
-            messagebox.showinfo("Info", "Password saved successfully!")
-            self.controller.show_frame(PasswordManagerApp)
-            self.controller.frames[PasswordManagerApp].show_records(self.controller)
+            try:
+                website = self.website_entry.get()
+                username = self.user_entry.get()
+                password = self.password_entry.get()
+                database_connection.add_account(website, username, password)
+                messagebox.showinfo("Info", "Password saved successfully!")
+                self.controller.show_frame(PasswordManagerApp)
+                self.controller.frames[PasswordManagerApp].show_records(self.controller)
+            except:
+                messagebox.showerror("Error", f"Failed to save password.\n Website already added.")
