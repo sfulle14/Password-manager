@@ -38,9 +38,13 @@ class LoginApp:
         self.password = tk.Entry(self.main_frame, width=25)
         self.password.grid(row=2, column=1, pady=10)  # Place next to the label
         
-        # Add a button to show password
+        # Button to login
         self.show_button = tk.Button(self.main_frame, text="Login", command=lambda: controller.show_frame(PasswordManagerApp))
         self.show_button.grid(row=3, column=0, columnspan=2, pady=10)
+
+        # Button to add user
+        self.show_button = tk.Button(self.main_frame, text="Add User", command=lambda: controller.show_frame(AddUserApp))
+        self.show_button.grid(row=3, column=2, columnspan=2, pady=10)
 
 
 """
@@ -184,3 +188,42 @@ class AddPasswordApp:
                 self.controller.frames[PasswordManagerApp].show_records(self.controller)
             except:
                 messagebox.showerror("Error", f"Failed to save password.\n Website already added.")
+
+
+class AddUserApp:
+    def __init__(self, root, controller):
+        self.root = root
+        self.controller = controller
+        self.root.title("Password Manager")
+
+        # Create main frame
+        self.main_frame = tk.Frame(self.root, padx=10, pady=10)
+        self.main_frame.grid(row=0, column=0, sticky="nsew")
+        
+        # Add Program label
+        self.label = tk.Label(self.main_frame, text="Add new User", font=("Arial", 14))
+        self.label.grid(row=0, column=0, columnspan=2, pady=10)  # Span across both columns
+
+        # Logout Button
+        self.logout_button = tk.Button(self.main_frame, text="Back", command=lambda: controller.show_frame(LoginApp))
+        self.logout_button.grid(row=0, column=4, columnspan=2, sticky=tk.E)  # Placed at the top right
+
+        # Add username label
+        self.userLabel = tk.Label(self.main_frame, text="UserName:", font=("Arial", 14))
+        self.userLabel.grid(row=1, column=0, sticky=tk.E)  # Align to the right (East)
+        
+        # Add username input
+        self.user = tk.Entry(self.main_frame, width=25)
+        self.user.grid(row=1, column=1, pady=10)  # Place next to the label
+
+        # Add password label
+        self.passwordLabel = tk.Label(self.main_frame, text="Password:", font=("Arial", 14))
+        self.passwordLabel.grid(row=2, column=0, sticky=tk.E)  # Align to the right (East)
+        
+        # Add password input
+        self.password = tk.Entry(self.main_frame, width=25)
+        self.password.grid(row=2, column=1, pady=10)  # Place next to the label
+
+        # Button to submit new user
+        self.show_button = tk.Button(self.main_frame, text="Submit", command=lambda: controller.show_frame(LoginApp))
+        self.show_button.grid(row=3, column=0, columnspan=2, pady=10)

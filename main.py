@@ -9,7 +9,7 @@ This passwords and usernames should be hidden until clicked and linked to a webs
 import tkinter as tk
 from tkinter import messagebox
 import database_connection
-from app import LoginApp, PasswordManagerApp, AddPasswordApp
+from app import LoginApp, PasswordManagerApp, AddPasswordApp, AddUserApp
 
 
 class AppController:
@@ -17,7 +17,7 @@ class AppController:
         self.root = root
         self.frames = {}
 
-        for F in (LoginApp, PasswordManagerApp, AddPasswordApp):
+        for F in (LoginApp, PasswordManagerApp, AddPasswordApp, AddUserApp):
             frame = F(root, self)
             self.frames[F] = frame
             frame.main_frame.grid(row=0, column=0, sticky="nsew")
