@@ -187,7 +187,7 @@ class AddPasswordApp:
                 self.controller.show_frame(PasswordManagerApp)
                 self.controller.frames[PasswordManagerApp].show_records(self.controller)
             except:
-                messagebox.showerror("Error", f"Failed to save password.\n Website already added.")
+                messagebox.showerror("Error", "Failed to save password.\n Website already added.")
 
 
 class AddUserApp:
@@ -225,5 +225,15 @@ class AddUserApp:
         self.password.grid(row=2, column=1, pady=10)  # Place next to the label
 
         # Button to submit new user
-        self.show_button = tk.Button(self.main_frame, text="Submit", command=lambda: controller.show_frame(LoginApp))
+        self.show_button = tk.Button(self.main_frame, text="Submit", command=self.save_user)
         self.show_button.grid(row=3, column=0, columnspan=2, pady=10)
+
+    def save_user(self):
+        try:
+            username = self.user.get()
+            password = self.password.get()
+            database_connection.add_users(username, password)
+            messagebox.showinfo("Info", "User added successfully!")
+            self.controller.show_frame(LoginApp)
+        except:
+            messagebox.showerror("Error", "User already exsits.")
