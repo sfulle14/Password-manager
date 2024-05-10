@@ -60,8 +60,9 @@ class PasswordManagerApp:
 
         self.show_records(controller)
 
-
+    # Function to recreate the display each time it is loaded
     def show_records(self, controller):
+        # Delete the widget before being readded
         for widget in self.main_frame.winfo_children():
             widget.destroy()
 
@@ -85,8 +86,10 @@ class PasswordManagerApp:
         self.label = tk.Label(self.main_frame, text="Password", font=("Arial", 14))
         self.label.grid(row=1, column=7, columnspan=3, pady=10, sticky=tk.W)
 
+        # Loop through records and display them
         records = database_connection.get_records()
         for index, row in enumerate(records):
+            # row number and index in database
             index_label = tk.Label(self.main_frame, text=row[0], font=("Arial", 14))
             index_label.grid(row=index+2, column=0, columnspan=1, sticky=tk.W)  # row
             self.index_labels[index] = (index_label, row[0])
@@ -94,18 +97,20 @@ class PasswordManagerApp:
             tk.Label(self.main_frame, text=row[1], font=("Arial", 14)).grid(row=index+2, column=1, columnspan=2, sticky=tk.W)  # website
             tk.Label(self.main_frame, text=row[2], font=("Arial", 14)).grid(row=index+2, column=4, columnspan=2, sticky=tk.W)  # username
 
+            # Password
             password_label = tk.Label(self.main_frame, text="*"*10, font=("Arial", 14))
-            password_label.grid(row=index+2, column=7, columnspan=2, sticky=tk.W)  # password
+            password_label.grid(row=index+2, column=7, columnspan=2, sticky=tk.W) 
             self.password_labels[index] = (password_label, row[3])
             
-            # Buttons
+            # Show/hide password button
             self.show_password_button = tk.Button(self.main_frame, text="show password", command=lambda idx=index: self.toggle_password_display(idx))
             self.show_password_button.grid(row=index+2, column=9, columnspan=2, sticky=tk.W) 
 
+            # Delete record button
             self.delete_button = tk.Button(self.main_frame, text="delete", command=lambda idx=index: self.delete_record(idx, controller))
             self.delete_button.grid(row=index+2, column=11, columnspan=2, sticky=tk.W) 
 
-        
+    # Function that is called with the delete button is pressed
     def delete_record(self, index, controller):
         label, id = self.index_labels[index]
         database_connection.delete_row(id)
@@ -113,6 +118,7 @@ class PasswordManagerApp:
         self.controller.show_frame(PasswordManagerApp)
         self.controller.frames[PasswordManagerApp].show_records(controller)
 
+    # Function that toggles the display of password
     def toggle_password_display(self, index):
         label, actual_password = self.password_labels[index]
         current_text = label.cget("text")
@@ -146,21 +152,18 @@ class AddPasswordApp:
         # Add website label
         self.label = tk.Label(self.main_frame, text="Websites", font=("Arial", 14))
         self.label.grid(row=1, column=0, columnspan=2, pady=10)  # Span across both columns
-
         self.website_entry = tk.Entry(self.main_frame, width=25)
         self.website_entry.grid(row=2, column=0, columnspan=2, pady=10)
 
         # Add Username label
         self.label = tk.Label(self.main_frame, text="Username", font=("Arial", 14))
         self.label.grid(row=1, column=2, columnspan=2, pady=10)  # Span across both columns
-
         self.user_entry = tk.Entry(self.main_frame, width=25)
         self.user_entry.grid(row=2, column=2, columnspan=2, pady=10)
 
         # Add Password label
         self.label = tk.Label(self.main_frame, text="Password", font=("Arial", 14))
         self.label.grid(row=1, column=4, columnspan=2, pady=10)  # Span across both columns
-
         self.password_entry = tk.Entry(self.main_frame, width=25)
         self.password_entry.grid(row=2, column=4, columnspan=2, pady=10)
 
@@ -168,6 +171,8 @@ class AddPasswordApp:
         self.add_password_button = tk.Button(self.main_frame, text="Submit", command=self.save_password)
         self.add_password_button.grid(row=3, column=2, columnspan=2, pady=10)  # Placed at the top right
 
+    # Function that is called when the submit button is pressed
+    # This function save the entry into the accounts table
     def save_password(self):
             try:
                 website = self.website_entry.get()
