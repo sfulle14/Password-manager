@@ -55,10 +55,10 @@ def get_records():
     return records
 
 # Remove a record
-def delete_row(id):
+def delete_row(idx):
     conn = create_connection()
     c = conn.cursor()
-    c.execute("DELETE FROM accounts WHERE id = ?", (id))
+    c.execute("DELETE FROM accounts WHERE id = ?", (idx,))
     conn.commit()
     conn.close()
     
