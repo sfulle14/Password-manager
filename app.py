@@ -30,8 +30,6 @@ class LoginApp:
         self.user = tk.Entry(self.main_frame, width=25)
         self.user.grid(row=1, column=1, pady=10)  # Place next to the label
 
-
-
         # Add password label
         self.passwordLabel = tk.Label(self.main_frame, text="Password:", font=("Arial", 14))
         self.passwordLabel.grid(row=2, column=0, sticky=tk.E)  # Align to the right (East)
@@ -41,12 +39,25 @@ class LoginApp:
         self.password.grid(row=2, column=1, pady=10)  # Place next to the label
         
         # Button to login
-        self.show_button = tk.Button(self.main_frame, text="Login", command=lambda: controller.show_frame(PasswordManagerApp))
+        self.show_button = tk.Button(self.main_frame, text="Login", command=self.verify_user)
         self.show_button.grid(row=3, column=0, columnspan=2, pady=10)
 
         # Button to add user
         self.show_button = tk.Button(self.main_frame, text="Add User", command=lambda: controller.show_frame(AddUserApp))
         self.show_button.grid(row=3, column=2, columnspan=1, pady=10)
+
+    def verify_user(self):
+        user_list = database_connection.get_user()
+        username = self.user.get()
+        password = self.password.get()
+        for index, row in enumerate(user_list):
+            if row[1] == username and row[2] == password:
+                self.controller.show_frame(PasswordManagerApp)
+                self.controller.frames[PasswordManagerApp].show_records(self.controller)
+                return
+        messagebox.showerror("Error", "Wrong Username or Password.")
+        
+
 
 
 """

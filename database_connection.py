@@ -62,3 +62,12 @@ def delete_row(idx):
     conn.commit()
     conn.close()
     
+def get_user():
+    conn = create_connection()
+    c = conn.cursor()
+    c.execute("SELECT * FROM users")
+    user_list = c.fetchall()
+    conn.commit()
+    conn.close()
+    return user_list
+
