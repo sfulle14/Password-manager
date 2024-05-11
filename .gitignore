@@ -1,1 +1,2 @@
-#.db
+# SQLite database file
+password_manager.db
