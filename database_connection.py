@@ -9,12 +9,12 @@ def create_connection():
 def setup_database():
     conn = create_connection()
     c = conn.cursor()
-    # Create accounts table
-    c.execute('''CREATE TABLE IF NOT EXISTS accounts
-                 (id INTEGER PRIMARY KEY, website TEXT UNIQUE, username TEXT, password TEXT, FOREIGN KEY(userID) REFERENCES users(id))''')
     # Create users table
     c.execute('''CREATE TABLE IF NOT EXISTS users
                  (id INTEGER PRIMARY KEY, username TEXT UNIQUE, password TEXT)''')
+    # Create accounts table
+    c.execute('''CREATE TABLE IF NOT EXISTS accounts
+                 (id INTEGER PRIMARY KEY, website TEXT UNIQUE, username TEXT, password TEXT, userID Integer, FOREIGN KEY(userID) REFERENCES users(id))''')
     conn.commit()
     conn.close()
 
@@ -22,7 +22,7 @@ def setup_database():
 def add_account(website, username, password, userID):
     conn = create_connection()
     c = conn.cursor()
-    c.execute("INSERT INTO accounts (website, username, password, userID) VALUES (?, ?, ?)", (website, username, password, userID))
+    c.execute("INSERT INTO accounts (website, username, password, userID) VALUES (?, ?, ?, ?)", (website, username, password, userID))
     conn.commit()
     conn.close()
 

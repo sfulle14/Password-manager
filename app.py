@@ -199,10 +199,19 @@ class AddPasswordApp:
                 user_id = self.controller.get_user_id()
                 database_connection.add_account(website, username, password, user_id)
                 messagebox.showinfo("Info", "Password saved successfully!")
+                self.website_entry.delete(0, tk.END)
+                self.user_entry.delete(0, tk.END)
+                self.password_entry.delete(0, tk.END)
                 self.controller.show_frame(PasswordManagerApp)
                 self.controller.frames[PasswordManagerApp].show_records(self.controller)
             except:
                 messagebox.showerror("Error", "Failed to save password.\n Website already added.")
+                self.website_entry.delete(0, tk.END)
+                self.user_entry.delete(0, tk.END)
+                self.password_entry.delete(0, tk.END)
+                self.controller.show_frame(AddPasswordApp)
+                self.controller.frames[AddPasswordApp]
+
 
 """
 This app will allow users to create an account
