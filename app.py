@@ -13,7 +13,6 @@ class LoginApp:
         self.root = root
         self.controller = controller
         self.root.title("Password Manager")
-        self.user_id 
         
         # Create main frame
         self.main_frame = tk.Frame(self.root, padx=10, pady=10)
@@ -40,7 +39,7 @@ class LoginApp:
         self.password.grid(row=2, column=1, pady=10)  # Place next to the label
         
         # Button to login
-        self.show_button = tk.Button(self.main_frame, text="Login", command=self.verify_user))
+        self.show_button = tk.Button(self.main_frame, text="Login", command=self.verify_user)
         self.show_button.grid(row=3, column=0, columnspan=2, pady=10)
 
         # Button to add user
@@ -56,12 +55,10 @@ class LoginApp:
                 self.controller.set_user_id(row[0])
                 self.controller.show_frame(PasswordManagerApp)
                 self.controller.frames[PasswordManagerApp].show_records(self.controller)
-                self.user_id = row[0]
+                # self.user_id = row[0]
                 return 
         messagebox.showerror("Error", "Wrong Username or Password.")
         
-
-
 
 """
 This will congrol the layout of the displayed websites, usernames, and passwords.
@@ -259,12 +256,3 @@ class AddUserApp:
             messagebox.showerror("Error", "User already exsits.")
 
 
-class Controller:
-    def __init__(self):
-        self.user_id = None
-
-    def set_user_id(self, user_id):
-        self.user_id = user_id
-
-    def get_user_id(self):
-        return self.user_id

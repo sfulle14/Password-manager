@@ -16,6 +16,7 @@ class AppController:
     def __init__(self, root):
         self.root = root
         self.frames = {}
+        self.user_id = None
 
         for F in (LoginApp, PasswordManagerApp, AddPasswordApp, AddUserApp):
             frame = F(root, self)
@@ -27,6 +28,12 @@ class AppController:
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.main_frame.tkraise()
+
+    def set_user_id(self, user_id):
+        self.user_id = user_id
+
+    def get_user_id(self):
+        return self.user_id
     
 
 def main():
