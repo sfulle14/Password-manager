@@ -30,6 +30,8 @@ class LoginApp:
         self.user = tk.Entry(self.main_frame, width=25)
         self.user.grid(row=1, column=1, pady=10)  # Place next to the label
 
+
+
         # Add password label
         self.passwordLabel = tk.Label(self.main_frame, text="Password:", font=("Arial", 14))
         self.passwordLabel.grid(row=2, column=0, sticky=tk.E)  # Align to the right (East)
@@ -190,7 +192,9 @@ class AddPasswordApp:
             except:
                 messagebox.showerror("Error", "Failed to save password.\n Website already added.")
 
-
+"""
+This app will allow users to create an account
+"""
 class AddUserApp:
     def __init__(self, root, controller):
         self.root = root
