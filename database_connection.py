@@ -32,10 +32,11 @@ def add_account(website, username, password, userID):
 # Add data to users table
 def add_users(username, password):
     conn = create_connection()
-    c = conn.cursor()
-    c.execute("INSERT INTO users (username, password) VALUES(?, ?)", (username, password))
-    conn.commit()
-    conn.close()
+    try:
+        with conn:
+            conn.execute("INSERT INTO users (username, password) VALUES(?, ?)", (username, password))
+    finally:
+        conn.close()
 
 # Get count of records in accounts table
 def get_record_count():
@@ -60,10 +61,11 @@ def get_records():
 # Remove a record
 def delete_row(idx):
     conn = create_connection()
-    c = conn.cursor()
-    c.execute("DELETE FROM accounts WHERE id = ?", (idx,))
-    conn.commit()
-    conn.close()
+    try:
+        with conn:
+            conn.execute("DELETE FROM accounts WHERE id = ?", (idx,))
+    finally:
+        conn.close()
     
 def get_user():
     conn = create_connection()
