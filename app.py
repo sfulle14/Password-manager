@@ -53,6 +53,8 @@ class LoginApp:
         for index, row in enumerate(user_list):
             if row[1] == username and row[2] == password:
                 self.controller.set_user_id(row[0])
+                self.user.delete(0, tk.END)
+                self.password.delete(0, tk.END)
                 self.controller.show_frame(PasswordManagerApp)
                 self.controller.frames[PasswordManagerApp].show_records(self.controller)
                 # self.user_id = row[0]
@@ -192,25 +194,37 @@ class AddPasswordApp:
     # Function that is called when the submit button is pressed
     # This function save the entry into the accounts table
     def save_password(self):
-            try:
-                website = self.website_entry.get()
-                username = self.user_entry.get()
-                password = self.password_entry.get()
-                user_id = self.controller.get_user_id()
-                database_connection.add_account(website, username, password, user_id)
-                messagebox.showinfo("Info", "Password saved successfully!")
-                self.website_entry.delete(0, tk.END)
-                self.user_entry.delete(0, tk.END)
-                self.password_entry.delete(0, tk.END)
-                self.controller.show_frame(PasswordManagerApp)
-                self.controller.frames[PasswordManagerApp].show_records(self.controller)
-            except:
-                messagebox.showerror("Error", "Failed to save password.\n Website already added.")
-                self.website_entry.delete(0, tk.END)
-                self.user_entry.delete(0, tk.END)
-                self.password_entry.delete(0, tk.END)
-                self.controller.show_frame(AddPasswordApp)
-                self.controller.frames[AddPasswordApp]
+        try:
+            # get data to add
+            website = self.website_entry.get()
+            username = self.user_entry.get()
+            password = self.password_entry.get()
+            user_id = self.controller.get_user_id()
+            
+            # Add data
+            database_connection.add_account(website, username, password, user_id)
+            messagebox.showinfo("Info", "Password saved successfully!") # show if successful
+
+            # Clear textboxes
+            self.website_entry.delete(0, tk.END)
+            self.user_entry.delete(0, tk.END)
+            self.password_entry.delete(0, tk.END)
+
+            # Send back to PasswordManagerApp
+            self.controller.show_frame(PasswordManagerApp)
+            self.controller.frames[PasswordManagerApp].show_records(self.controller)
+        except:
+            # error message if fails
+            messagebox.showerror("Error", "Failed to save password.\n Website already added.")
+
+            # Clear textboxes
+            self.website_entry.delete(0, tk.END)
+            self.user_entry.delete(0, tk.END)
+            self.password_entry.delete(0, tk.END)
+
+            # Reload the AddPasswordApp frame to reset its state
+            self.controller.show_frame(AddPasswordApp)
+
 
 
 """

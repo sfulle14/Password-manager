@@ -21,10 +21,13 @@ def setup_database():
 # Add data to accounts table
 def add_account(website, username, password, userID):
     conn = create_connection()
-    c = conn.cursor()
-    c.execute("INSERT INTO accounts (website, username, password, userID) VALUES (?, ?, ?, ?)", (website, username, password, userID))
-    conn.commit()
-    conn.close()
+    # c = conn.cursor()
+    try:
+        with conn:
+            conn.execute("INSERT INTO accounts (website, username, password, userID) VALUES (?, ?, ?, ?)", (website, username, password, userID))
+    finally:
+        conn.close()
+
 
 # Add data to users table
 def add_users(username, password):
