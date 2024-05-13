@@ -106,7 +106,8 @@ class PasswordManagerApp:
         self.label.grid(row=1, column=7, columnspan=3, pady=10, sticky=tk.W)
 
         # Loop through records and display them
-        records = database_connection.get_records()
+        user_id = self.controller.get_user_id()
+        records = database_connection.get_records(user_id)
         for index, row in enumerate(records):
             # row number and index in database
             index_label = tk.Label(self.main_frame, text=index+1, font=("Arial", 14))

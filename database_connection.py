@@ -49,10 +49,10 @@ def get_record_count():
     return count
 
 # Get records from accounts table
-def get_records():
+def get_records(userId):
     conn = create_connection()
     c = conn.cursor()
-    c.execute("SELECT * FROM accounts")
+    c.execute("SELECT * FROM accounts WHERE userID = ?", (userId,))
     records = c.fetchall()
     conn.commit()
     conn.close()
