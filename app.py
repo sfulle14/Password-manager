@@ -4,6 +4,7 @@ The program will hold all the functionality of the application.
 import tkinter as tk
 from tkinter import messagebox
 import database_connection
+from sha254 import SHA256
 
 """
 This will control the login page functionality
@@ -49,9 +50,9 @@ class LoginApp:
     def verify_user(self):
         user_list = database_connection.get_user()
         username = self.user.get()
-        password = self.password.get()
+        hashed_password = SHA256.sha256(self.password.get())
         for index, row in enumerate(user_list):
-            if row[1] == username and row[2] == password:
+            if row[1] == username and row[2] == hashed_password:
                 self.controller.set_user_id(row[0])
                 self.user.delete(0, tk.END)
                 self.password.delete(0, tk.END)
@@ -273,10 +274,9 @@ class AddUserApp:
         try:
             username = self.user.get()
             password = self.password.get()
-            database_connection.add_users(username, password)
+            hashed_password = SHA256.sha256(password)
+            database_connection.add_users(username, hashed_password)
             messagebox.showinfo("Info", "User added successfully!")
             self.controller.show_frame(LoginApp)
         except:
             messagebox.showerror("Error", "User already exsits.")
-
-
