@@ -4,6 +4,7 @@ The program will hold all the functionality of the application.
 import tkinter as tk
 from tkinter import messagebox
 import database_connection
+import hashlib 
 
 """
 This will control the login page functionality
@@ -49,7 +50,7 @@ class LoginApp:
     def verify_user(self):
         user_list = database_connection.get_user()
         username = self.user.get()
-        password = self.password.get()
+        password = hashlib.sha256(self.password.get().encode()).hexdigest()  # hash the password to compare to db
         for index, row in enumerate(user_list):
             if row[1] == username and row[2] == password:
                 self.controller.set_user_id(row[0])
@@ -272,7 +273,7 @@ class AddUserApp:
     def save_user(self):
         try:
             username = self.user.get()
-            password = self.password.get()
+            password = hashlib.sha256(self.password.get().encode()).hexdigest()  # hash the password using sha-256 before storing
             database_connection.add_users(username, password)
             messagebox.showinfo("Info", "User added successfully!")
             self.controller.show_frame(LoginApp)
