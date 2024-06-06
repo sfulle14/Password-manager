@@ -6,6 +6,7 @@ from tkinter import messagebox
 import database_connection
 import hashlib 
 from caesar_cipher import CaesarCipher
+from sqlite3 import IntegrityError
 
 """
 This will control the login page functionality
@@ -203,7 +204,8 @@ class AddPasswordApp:
             # get data to add
             website = self.website_entry.get()
             username = self.user_entry.get()
-            password = CaesarCipher.encrypt(self, self.password_entry.get())  # Encrypt input passwords
+            password = self.password_entry.get()  # Encrypt input passwords
+            password = CaesarCipher.encrypt(self, password) 
             user_id = self.controller.get_user_id()
             
             # Add data
@@ -218,9 +220,19 @@ class AddPasswordApp:
             # Send back to PasswordManagerApp
             self.controller.show_frame(PasswordManagerApp)
             self.controller.frames[PasswordManagerApp].show_records(self.controller)
-        except:
+        except IntegrityError as e:
             # error message if fails
             messagebox.showerror("Error", "Failed to save password.\n Website already added.")
+
+            # Clear textboxes
+            self.website_entry.delete(0, tk.END)
+            self.user_entry.delete(0, tk.END)
+            self.password_entry.delete(0, tk.END)
+
+            # Reload the AddPasswordApp frame to reset its state
+            self.controller.show_frame(AddPasswordApp)
+        except Exception as e:
+            messagebox.showerror("Error", f"An unexpected error occurred: {str(e)}")
 
             # Clear textboxes
             self.website_entry.delete(0, tk.END)
