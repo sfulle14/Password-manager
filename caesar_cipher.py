@@ -21,5 +21,16 @@ class CaesarCipher:
         return encrypted_text
     
     def decrypt(self, text):
-        return self
+        shif_value = 22
+        decrypted_text = ''
+
+        for c in enumerate(text):
+            # Decrypt uppercase letters 
+            if(c.isupper()):
+                decrypted_text += chr((ord(c) - shif_value + 65) % 26 - 65)
+            # Decrypt lowercase letters
+            else:
+                decrypted_text += chr((ord(c) - shif_value + 97) % 26 - 97)
+
+        return decrypted_text
 
