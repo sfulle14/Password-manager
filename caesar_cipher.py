@@ -9,7 +9,9 @@ class CaesarCipher:
         shif_value = 22
         encrypted_text = ''
 
-        for c in enumerate(text):
+        for i in range(len(text)):
+            c = text[i]
+
             # Encrypt uppercase letters
             if(c.isupper()):
                 encrypted_text += chr((ord(c) + shif_value - 65) % 26 + 65)
@@ -24,7 +26,9 @@ class CaesarCipher:
         shif_value = 22
         decrypted_text = ''
 
-        for c in enumerate(text):
+        for i in range(len(text)):
+            c = text[i]
+            
             # Decrypt uppercase letters 
             if(c.isupper()):
                 decrypted_text += chr((ord(c) - shif_value - 65) % 26 + 65)

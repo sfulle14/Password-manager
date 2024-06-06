@@ -144,6 +144,8 @@ class PasswordManagerApp:
     def toggle_password_display(self, index):
         label, actual_password = self.password_labels[index]
         current_text = label.cget("text")
+        actual_password = CaesarCipher.decrypt(self, actual_password) # decrypt password to show
+
         if current_text == "*"*10:
             label.config(text=actual_password)
         else:
@@ -201,7 +203,7 @@ class AddPasswordApp:
             # get data to add
             website = self.website_entry.get()
             username = self.user_entry.get()
-            password = self.password_entry.get()
+            password = CaesarCipher.encrypt(self, self.password_entry.get())  # Encrypt input passwords
             user_id = self.controller.get_user_id()
             
             # Add data
