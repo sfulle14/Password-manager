@@ -231,6 +231,7 @@ class AddPasswordApp:
 
             # Reload the AddPasswordApp frame to reset its state
             self.controller.show_frame(AddPasswordApp)
+            
         except Exception as e:
             messagebox.showerror("Error", f"An unexpected error occurred: {str(e)}")
 

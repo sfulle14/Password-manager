@@ -22,6 +22,7 @@ class CaesarCipher:
             # Encrypt numbers
             elif(c.isnumeric()):
                 encrypted_text += chr((ord(c) + shift_num - 48) % 10 + 48)
+            # Handle all other values
             else:
                 encrypted_text += c
 
@@ -45,9 +46,9 @@ class CaesarCipher:
             # Decrypt Numbers
             elif(c.isnumeric()):
                 decrypted_text += chr((ord(c) - shift_num - 48) % 10 + 48)
+            # Handle all other values
             else:
                 decrypted_text += c
 
-            
         return decrypted_text
 
